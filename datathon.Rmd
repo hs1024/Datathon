@@ -1,0 +1,108 @@
+---
+title: "datathon"
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
+library(tidyverse)
+library(knitr)
+library(sjPlot)
+library(emmeans)
+library(car)
+library(pander)
+library("readxl")
+```
+
+
+```{r}
+df<- read_excel("/Users/ungsitong/Desktop//location2.xlsx")
+df
+```
+```{r}
+df$Location <- as.factor(df$Location) 
+```
+
+```{r ,fig.cap="The student percentage change in location"}
+df %>%
+  tail(120) %>%
+  ggplot( aes(x= Year, y= StudentPercentageChange, color= Location)) +
+    geom_line(aes(x = as.numeric(Year))) + theme_minimal()+
+    geom_point()
+
+```
+```{r}
+df1<- read_excel("/Users/ungsitong/Desktop//collegeofscience.xlsx")
+```
+```{r}
+df1$College <- as.factor(df1$College)
+df1$School <- as.factor(df1$School)
+```
+
+```{r, fig.cap="The student percentage change in College of Science and Engineering"}
+df1 %>%
+  tail(120) %>%
+  ggplot( aes(x= Year, y= StudentPercentageChange, color= School)) +
+    geom_line(aes(x = as.numeric(Year))) + theme_minimal()+
+    geom_point()
+```
+```{r}
+df2<- read_excel("/Users/ungsitong/Desktop//collegeofmedical.xlsx")
+df2
+```
+```{r}
+df2$College <- as.factor(df2$College)
+df2$School <- as.factor(df2$School)
+```
+
+```{r, fig.cap="The student percentage change in College of Medicine and Veterinary Medicine"}
+df2 %>%
+  tail(120) %>%
+  ggplot( aes(x= Year, y= StudentPercentageChange, color= School)) +
+    geom_line(aes(x = as.numeric(Year))) + theme_minimal()+
+    geom_point()
+```
+```{r}
+df3<- read_excel("/Users/ungsitong/Desktop//collegeofart.xlsx")
+```
+
+```{r}
+df3$College <- as.factor(df3$College)
+```
+```{r, fig.cap="The student percentage change in College of Arts, Humanities and Social"}
+df3 %>%
+  tail(300) %>%
+  ggplot( aes(x= Year, y= StudentPercentageChange, color= School)) +
+    geom_line(aes(x = as.numeric(Year))) + theme_minimal()+
+    geom_point()
+```
+```{r}
+df4<- read_excel("/Users/ungsitong/Desktop//college.xlsx")
+```
+
+```{r}
+df4$College <- as.factor(df4$College)
+```
+
+```{r, fig.cap="The student percentage change among different colleges" }
+df4 %>%
+  tail(400) %>%
+  ggplot( aes(x= Year, y= StudentPercentageChange, color= College)) +
+    geom_line(aes(x = as.numeric(Year))) + theme_minimal()+
+    geom_point()
+```
+
+```{r}
+df5<- read_excel("/Users/ungsitong/Desktop//country.xlsx")
+df5
+```
+```{r fig.cap="International student origin percentage change between 17/18 and 19/20"}
+ggplot(df5, aes(x= Country, y= InternationalStudentPercentageChange)) + 
+  geom_bar(stat = "identity") +
+  scale_fill_hue(c = 40) +
+  coord_flip()
+```
